@@ -1,0 +1,34 @@
+# Handy substitutions:
+# --------------
+# %{PROJECT_DIR}  = the project directory (containing the spec file)
+# %{DOWNLOAD_DIR} = the directory that Source0 is downloaded into before tarring (dist/<name>-<version>/)
+# %{SOURCES_DIR}  = directory to stage "extra" source files/archive beyond Source0
+# %{VERSION}      = the value of :version
+#
+# Notes:
+#   :version
+#      Used to name the tarball and as the git tag
+#
+# TPM 1.2 simulator
+# ----------------
+#
+# * To avoid risking a hardware TPM for development, testing, or learning,
+#   utilizing the TCG's reference TPM 1.2 simulator.
+# * IBM's Software Trusted Platform Module (TPM) includes a TPM 1.2
+#   implementation, low level demo libraries and command line tools, a TPM test
+#   suite, and proxies to connect from a TCP/IP socket to a hardware TPM.
+#
+# See:
+#   * https://sourceforge.net/projects/ibmswtpm/
+#
+simp-tpm12-simulator:
+  :type: :targz
+  :build: 'yes'
+  :version: '4769'
+  :url: https://sourceforge.net/projects/ibmswtpm/files/tpm%{VERSION}tar.gz/download
+  :extras:
+    :post_dl:
+      - cp -v '%{PROJECT_DIR}/simp-tpm12-simulator.service' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-tpm12-tpmbios.service' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-tpm12-simulator.environment' '%{SOURCES_DIR}/'
+

@@ -1,0 +1,16 @@
+# copy this file into /etc/systemd/system
+[Unit]
+Description=TPM12 Simulator
+
+[Service]
+Type=simple
+Restart=no
+EnvironmentFile=-/etc/default/tpm12-simulator
+BusName=com.ibm.tpm12.tpm12-simulator
+StandardOutput=syslog
+ExecStart=/usr/local/bin/tpm12-simulator
+User=tss
+
+[Install]
+WantedBy=multi-user.target
+
