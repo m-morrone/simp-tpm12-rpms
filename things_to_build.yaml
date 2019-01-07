@@ -17,9 +17,21 @@
 # * IBM's Software Trusted Platform Module (TPM) includes a TPM 1.2
 #   implementation, low level demo libraries and command line tools, a TPM test
 #   suite, and proxies to connect from a TCP/IP socket to a hardware TPM.
+# * Running the TPM simulator does not require root priveleges.  The first time
+#   trhough, non-volatile storage is read and used to initialize the TPM.
+# * Since the TPM is 'shipped' deactivated, the procedure for the fir first
+#   time is:
+#   - Start the server (TPM simulator)
+#   - Simulate the BIOS and activiating the TPM
+#   - Abort and restart the server
+#   - Simulate BIOS
+#   After the TPM is activated, subsequent restarts require only:
+#   - Start the server
+#
 #
 # See:
 #   * https://sourceforge.net/projects/ibmswtpm/
+#   * http://ibmswtpm.sourceforge.net/tpm_tss.html
 #
 simp-tpm12-simulator:
   :type: :targz
