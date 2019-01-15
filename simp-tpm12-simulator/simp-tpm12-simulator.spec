@@ -15,6 +15,10 @@ Source0: %{name}-%{version}.tar.gz
 Source1: %{name}.service
 Source2: %{name}.environment
 Source3: simp-tpm12-tpmbios.service
+Source4: simp-tpm12-tpminit.service
+Source5: simp-tpm12-tcsd.service
+Source6: tpminit
+Source7: tcsdstarter
 
 BuildRequires: gcc
 BuildRequires: openssl-devel
@@ -45,9 +49,13 @@ install -m 0755 -D tpm/tpm_server %{buildroot}%{_bindir}/%{_name}
 install -m 0755 -D libtpm/utils/tpmbios %{buildroot}%{_bindir}/tpmbios
 install -m 0755 -D libtpm/utils/createek %{buildroot}%{_bindir}/createek
 install -m 0755 -D libtpm/utils/nv_definespace %{buildroot}%{_bindir}/nv_definespace
+install -m 0755 -D %{SOURCE6}     %{buildroot}%{_bindir}/tpminit
+install -m 0755 -D %{SOURCE7}     %{buildroot}%{_bindir}/tcsdstarter
 install -m 0644 -D %{SOURCE1}     %{buildroot}%{_unitdir}/%{_name}.service
 install -m 0644 -D %{SOURCE2}     %{buildroot}%{_sysconfdir}/default/%{_name}
 install -m 0644 -D %{SOURCE3}     %{buildroot}%{_unitdir}/tpm12-tpmbios.service
+install -m 0644 -D %{SOURCE4}     %{buildroot}%{_unitdir}/tpm12-tpminit.service
+install -m 0644 -D %{SOURCE5}     %{buildroot}%{_unitdir}/tpm12-tcsd.service
 
 %files
 %license LICENSE
@@ -55,31 +63,41 @@ install -m 0644 -D %{SOURCE3}     %{buildroot}%{_unitdir}/tpm12-tpmbios.service
 %{_bindir}/tpmbios
 %{_bindir}/createek
 %{_bindir}/nv_definespace
+%{_bindir}/tpminit
+%{_bindir}/tcsdstarter
 %{_unitdir}/%{_name}.service
 %{_sysconfdir}/default/%{_name}
 %{_unitdir}/tpm12-tpmbios.service
+%{_unitdir}/tpm12-tpminit.service
+%{_unitdir}/tpm12-tcsd.service
 
 
 %pre
 mkdir -p %{_datadir}
 
-getent group tpm12sim >/dev/null || groupadd -g 62 -r tpm12sim
-getent passwd tpm12sim >/dev/null || \
-useradd -r -u 62 -g tpm12sim -d /dev/null -s /sbin/nologin \
- -c "Account used by the simp-tpm12-simulator package to sandbox the simp-tpm12-simulator daemon" tpm12sim
+getent group tss >/dev/null || groupadd -g 62 -r tss
+getent passwd tss >/dev/null || \
+useradd -r -u 59 -g tss -d /dev/null -s /sbin/nologin \
+ -c "Account used by the trousers package to sandbox the tcsd daemon" tss
 exit 0
 
 %post
 %systemd_postun %{_name}.serivce
 %systemd_postun simp-tpm12-tpmbios.service
+%systemd_postun simp-tpm12-tpminit.service
+%systemd_postun simp-tpm12-tcsd.service
 
 %preun
 %systemd_preun %{_name}.serivce
 %systemd_preun simp-tpm12-tpmbios.service
+%systemd_postun simp-tpm12-tpminit.service
+%systemd_postun simp-tpm12-tcsd.service
 
 %postun
 %systemd_postun %{_name}.serivce
 %systemd_postun simp-tpm12-tpmbios.service
+%systemd_postun simp-tpm12-tpminit.service
+%systemd_postun simp-tpm12-tcsd.service
 
 %changelog
 * Mon Jan 7 2019 Michael Morrone <michael.morrone@onyxpoint.com> - 0.0.1

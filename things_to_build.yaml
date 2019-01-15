@@ -42,5 +42,9 @@ simp-tpm12-simulator:
     :post_dl:
       - cp -v '%{PROJECT_DIR}/simp-tpm12-simulator.service' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/simp-tpm12-tpmbios.service' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-tpm12-tpminit.service' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-tpm12-tcsd.service' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/simp-tpm12-simulator.environment' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/tpminit' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/tcsdstarter' '%{SOURCES_DIR}/'
 
