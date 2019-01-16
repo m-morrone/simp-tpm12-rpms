@@ -1,0 +1,12 @@
+# copy this file into /etc/systemd/system
+[Unit]
+Description=TPM12 Trousers Daemon
+
+[Service]
+Type=simple
+StandardOutput=syslog
+ExecStart=/usr/local/bin/tcsdstarter
+User=tss
+
+[Install]
+WantedBy=multi-user.target

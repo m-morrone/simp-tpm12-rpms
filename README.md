@@ -3,7 +3,7 @@
 
 ## Description
 
-This that builds and packages newer versions of TPM 1.2 simulator for testing
+This project builds and packages newer versions of TPM 1.2 simulator for testing
 purposes.  It is a repackage of the upstream IBM's Software TPM 1.2 source code.
 
 ### This is a SIMP project
@@ -17,13 +17,22 @@ If you find any issues, they can be submitted to our
 
 ## Setup
 
+### Setup Requirements
+
 To build rpm files to install the TPM 1.2 simulator, install this
 package and update the configuration files, namely `things_to_build.yaml`
-and `simp-tpm12-simulator.spec` as necessary.  Then build and package
-simulator with the command `bundle exec rake pkg:rpm` from with the
+and `simp-tpm12-simulator.spec`, as necessary.  Then build and package
+the simulator with the command `bundle exec rake pkg:rpm` from with the
 simp-tpm12-simulator directory.
 
 ### Beginning with simp-tpm12-rpm
+
+The TPM 1.2 simulator relies upon a couple rpm packages which should be
+installed on any target system intended to use the module. The packages are
+gcc, the GNU Compiler Collection, and trousers, and implementation of the 
+Trusted Computing Group's Software Stack(TSS) specification.  Additionally
+tpm-tools, a group of tools to manage and utilize the Trusted Computing
+Group's TPM hardware, is recommended.
 
 ## Usage
 
