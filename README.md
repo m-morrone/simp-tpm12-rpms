@@ -46,7 +46,7 @@ yum localinstall simp-tpm12-simulator-*.rpm
 This will install the simulator programs, utilities, and servics necessary
 to start and utilize the TPM 1.2 simulator.
 
-To initialize and use the TPM simulator, issue the following commands:
+To initialize and use the TPM simulator on EL7, issue the following commands:
 
 ```yaml
 # systemctl start tpm12-simulator
@@ -57,6 +57,16 @@ To initialize and use the TPM simulator, issue the following commands:
 # systemctl start tpm12-tcsd
 ```
 
+To initialize and use the TPM simulator on EL6, issue the following commands:
+
+```yaml
+# service start tpm12-simulator
+# service start tpm12-tpmbios
+# service restart tpm12-simulator
+# service start tpm12-tpmbios
+# service start tpm12-tpminit
+# service start tpm12-tcsd
+```
 
 [simp]: https://github.com/NationalSecurityAgency/SIMP/
 [jira]: https://simp-project.atlassian.net/

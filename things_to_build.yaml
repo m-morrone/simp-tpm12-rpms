@@ -48,3 +48,18 @@ simp-tpm12-simulator:
       - cp -v '%{PROJECT_DIR}/tpminit' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/tcsdstarter' '%{SOURCES_DIR}/'
 
+simp-el6-tpm12-simulator:
+  :type: :targz
+  :build: 'yes'
+  :version: '4769'
+  :url: https://sourceforge.net/projects/ibmswtpm/files/tpm%{VERSION}tar.gz/download
+  :extras:
+    :post_dl:
+      - cp -v '%{PROJECT_DIR}/simp-el6-tpm12-simulator' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-el6-tpm12-tpmbios' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-el6-tpm12-tpminit' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-el6-tpm12-tcsd' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/simp-el6-tpm12-simulator.environment' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/tpminit' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/tcsdstarter' '%{SOURCES_DIR}/'
+
