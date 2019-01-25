@@ -17,16 +17,17 @@ prog="tpm12-simulator"
 config="/etc/default/tpm12-simulator"
 
 [ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+[ -e $config ] && . $config
 
 lockfile=/var/lock/subsys/$prog
-. $config
 
 start() {
     [ -x $exec ] || exit 5
     [ -f $config ] || exit 6
     echo -n $"Starting $prog: "
     # if not running, start it up here, usually something like "daemon $exec"
-    daemon --user=tss $exec &
+    #daemon --user=tss $exec & #This is commented out because it does not return
+    /sbin/runuser tss -s /bin/bash -c "nohup $exec >/dev/null 2>&1 &"
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
