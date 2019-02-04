@@ -1,0 +1,13 @@
+# copy this file into /etc/systemd/system
+[Unit]
+Description=TPM12 Initialization 
+
+[Service]
+Type=simple
+StandardOutput=syslog
+ExecStart=/usr/local/bin/tpminit
+User=tss
+
+[Install]
+WantedBy=multi-user.target
+

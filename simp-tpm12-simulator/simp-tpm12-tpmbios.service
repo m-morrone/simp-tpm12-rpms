@@ -1,0 +1,16 @@
+# copy this file into /etc/systemd/system
+[Unit]
+Description=TPM12 BIOS
+
+[Service]
+Type=oneshot
+Restart=no
+EnvironmentFile=-/etc/default/tpm12-simulator
+StandardOutput=syslog
+ExecStart=/usr/local/bin/tpmbios
+User=tss
+After=tpm12-simulator.service
+
+[Install]
+WantedBy=multi-user.target
+
