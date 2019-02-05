@@ -1,14 +1,14 @@
 Name: simp-el6-tpm12-simulator
 Version: 4769.0.0
 Release: 0%{?dist}
-Summary: The IBM TPM1.2 simulator
+Summary: The SIMP IBM TPM 1.2 simulator
 
 # SIMP customization:
 %global _prefix /usr/local
 %global _name tpm12-simulator
 
-License: BSD
-URL:     https://sourceforge.net/projects/ibmswtpm/
+License: ASL 2.0 and BSD
+URL:     https://github.com/simp/simp-tpm12-rpms
 ###https://sourceforge.net/projects/ibmswtpm/files/tpm4769tar.gz/download
 ###https://sourceforge.net/projects/ibmswtpm/files/tpm%%{version}tar.gz/download
 Source0: %{name}-%{version}.tar.gz
@@ -18,6 +18,7 @@ Source3: simp-el6-tpm12-tpmbios
 Source4: simp-el6-tpm12-tpminit
 Source5: simp-el6-tpm12-tcsd
 Source6: tpminit
+Source7: LICENSE
 
 BuildRequires: gcc
 BuildRequires: openssl-devel
@@ -41,7 +42,7 @@ cd ../libtpm
 ./autogen
 ./configure
 make
-#%make_build
+cat %{SOURCE7} > ../LICENSE
 
 %install
 install -m 0755 -D tpm/tpm_server %{buildroot}%{_bindir}/%{_name}
@@ -56,10 +57,13 @@ install -m 0755 -D %{SOURCE4}     %{buildroot}%{_initddir}/tpm12-tpminit
 install -m 0755 -D %{SOURCE5}     %{buildroot}%{_initddir}/tpm12-tcsd
 
 %files
+%doc LICENSE
+#BSD
 %{_bindir}/%{_name}
 %{_bindir}/tpmbios
 %{_bindir}/createek
 %{_bindir}/nv_definespace
+#ASL 2.0
 %{_bindir}/tpminit
 %{_initddir}/%{_name}
 %{_sysconfdir}/default/%{_name}
@@ -78,23 +82,14 @@ useradd -r -u 59 -g tss -d /dev/null -s /sbin/nologin \
 exit 0
 
 %post
-%systemd_postun %{_name}
-%systemd_postun simp-el6-tpm12-tpmbios
-%systemd_postun simp-el6-tpm12-tpminit
-%systemd_postun simp-el6-tpm12-tcsd
 
 %preun
-%systemd_preun %{_name}
-%systemd_preun simp-el6-tpm12-tpmbios
-%systemd_postun simp-el6-tpm12-tpminit
-%systemd_postun simp-el6-tpm12-tcsd
 
 %postun
-%systemd_postun %{_name}
-%systemd_postun simp-el6-tpm12-tpmbios
-%systemd_postun simp-el6-tpm12-tpminit
-%systemd_postun simp-el6-tpm12-tcsd
 
 %changelog
+* Tue Feb 5 2019 Michael Morrone <michael.morrone@onyxpoint.com> - 0.0.2
+- Added LICENSE file
+
 * Fri Jan 25 2019 Michael Morrone <michael.morrone@onyxpoint.com> - 0.0.1
 - Initial commit

@@ -1,14 +1,14 @@
 Name: simp-tpm12-simulator
 Version: 4769.0.0
 Release: 0%{?dist}
-Summary: The IBM TPM1.2 simulator
+Summary: The SIMP IBM TPM 1.2 simulator
 
 # SIMP customization:
 %global _prefix /usr/local
 %global _name tpm12-simulator
 
-License: BSD
-URL:     https://sourceforge.net/projects/ibmswtpm/
+License: ASL 2.0 and BSD
+URL:     https://github.com/simp/simp-tpm12-rpms
 ###https://sourceforge.net/projects/ibmswtpm/files/tpm4769tar.gz/download
 ###https://sourceforge.net/projects/ibmswtpm/files/tpm%%{version}tar.gz/download
 Source0: %{name}-%{version}.tar.gz
@@ -19,6 +19,7 @@ Source4: simp-tpm12-tpminit.service
 Source5: simp-tpm12-tcsd.service
 Source6: tpminit
 Source7: tcsdstarter
+Source8: LICENSE
 
 BuildRequires: gcc
 BuildRequires: openssl-devel
@@ -42,7 +43,7 @@ cd ../libtpm
 ./autogen
 ./configure
 make
-#%make_build
+cat %{SOURCE8} > ../LICENSE
 
 %install
 install -m 0755 -D tpm/tpm_server %{buildroot}%{_bindir}/%{_name}
@@ -59,10 +60,12 @@ install -m 0644 -D %{SOURCE5}     %{buildroot}%{_unitdir}/tpm12-tcsd.service
 
 %files
 %license LICENSE
+#BSD
 %{_bindir}/%{_name}
 %{_bindir}/tpmbios
 %{_bindir}/createek
 %{_bindir}/nv_definespace
+#ASL 2.0
 %{_bindir}/tpminit
 %{_bindir}/tcsdstarter
 %{_unitdir}/%{_name}.service
@@ -100,5 +103,8 @@ exit 0
 %systemd_postun simp-tpm12-tcsd.service
 
 %changelog
+* Tue Feb 5 2019 Michael Morrone <michael.morrone@onyxpoint.com> - 0.0.2
+- Added LICENSE file
+
 * Mon Jan 7 2019 Michael Morrone <michael.morrone@onyxpoint.com> - 0.0.1
 - Initial commit

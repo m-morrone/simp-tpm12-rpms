@@ -47,6 +47,7 @@ simp-tpm12-simulator:
       - cp -v '%{PROJECT_DIR}/simp-tpm12-simulator.environment' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/tpminit' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/tcsdstarter' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/LICENSE' '%{SOURCES_DIR}/'
 
 simp-el6-tpm12-simulator:
   :type: :targz
@@ -62,4 +63,5 @@ simp-el6-tpm12-simulator:
       - cp -v '%{PROJECT_DIR}/simp-el6-tpm12-simulator.environment' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/tpminit' '%{SOURCES_DIR}/'
       - cp -v '%{PROJECT_DIR}/tcsdstarter' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/LICENSE' '%{SOURCES_DIR}/'
 
